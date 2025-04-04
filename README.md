@@ -2,5 +2,3 @@
 
 blabla
 
-
-my-password: 'asdsakpadpiajdawdwa'
