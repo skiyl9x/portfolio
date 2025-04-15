@@ -1,4 +1,4 @@
-name: Render to dev branch
+name: Render to dev-01 branch
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           git fetch origin dev-01
           git checkout dev-01
           mkdir -p rendered/nginx
-          cp tmp/dev/rendered/nginx/nginx.yaml rendered/nginx/nginx.yaml
+          cp tmp/dev-01/rendered/nginx/nginx.yaml rendered/nginx/nginx.yaml
           git add rendered/nginx/nginx.yaml
           git commit -m "Rendered manifests for dev-01" || echo "No changes"
           git push origin dev-01
