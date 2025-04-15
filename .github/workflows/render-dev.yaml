@@ -1,0 +1,40 @@
+name: Render to dev branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**'
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install kustomize
+        run: |
+          curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Render nginx manifests for dev
+        run: |
+          mkdir -p tmp/dev/rendered/nginx
+          kustomize build apps/overlays/dev/nginx > tmp/dev/rendered/nginx/nginx.yaml
+
+      - name: Push to dev branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git fetch origin dev
+          git checkout dev
+          mkdir -p rendered/nginx
+          cp tmp/dev/rendered/nginx/nginx.yaml rendered/nginx/nginx.yaml
+          git add rendered/nginx/nginx.yaml
+          git commit -m "Rendered manifests for dev" || echo "No changes"
+          git push origin dev
+
