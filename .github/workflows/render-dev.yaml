@@ -23,18 +23,18 @@ jobs:
 
       - name: Render nginx manifests for dev
         run: |
-          mkdir -p tmp/dev/rendered/nginx
-          kustomize build apps/overlays/dev/nginx > tmp/dev/rendered/nginx/nginx.yaml
+          mkdir -p tmp/dev-01/rendered/nginx
+          kustomize build apps/overlays/dev-01/nginx > tmp/dev/rendered/nginx/nginx.yaml
 
       - name: Push to dev branch
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git fetch origin dev
-          git checkout dev
+          git fetch origin dev-01
+          git checkout dev-01
           mkdir -p rendered/nginx
           cp tmp/dev/rendered/nginx/nginx.yaml rendered/nginx/nginx.yaml
           git add rendered/nginx/nginx.yaml
-          git commit -m "Rendered manifests for dev" || echo "No changes"
+          git commit -m "Rendered manifests for dev-01" || echo "No changes"
           git push origin dev
 
