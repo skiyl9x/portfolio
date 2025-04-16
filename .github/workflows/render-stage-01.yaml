@@ -26,7 +26,7 @@ jobs:
       - name: Render nginx manifests for stage-01
         run: |
           mkdir -p tmp/stage-01/rendered
-          kustomize build apps/overlays/stage-01/** > tmp/dev-01/rendered/all.yaml
+          kustomize build apps/overlays/stage-01/** > tmp/stage-01/rendered/all.yaml
 
       - name: Checkout stage-01 branch
         uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
       - name: Copy rendered output into stage-01
         run: |
           mkdir -p stage-01/rendered
-          cp tmp/dev-01/rendered/* stage-01/rendered/
+          cp tmp/stage-01/rendered/* stage-01/rendered/
 
       - name: Commit and push to new PR branch
         run: |
