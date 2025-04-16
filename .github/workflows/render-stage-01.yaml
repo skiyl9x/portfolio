@@ -51,6 +51,7 @@ jobs:
           git status
           git commit -m "Update rendered manifests for stage"
           git log
+          git status
           git push --set-upstream origin update-stage-rendered-${{ github.run_id }}
 
       - name: Create Pull Request to stage-01
