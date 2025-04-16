@@ -23,17 +23,28 @@ jobs:
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Render nginx manifests for dev-01
+      - name: Render nginx manifests for stage-01
         run: |
-          mkdir -p tmp/dev-01/rendered/nginx
-          kustomize build apps/overlays/dev-01/nginx > tmp/dev-01/rendered/nginx/nginx.yaml
+          mkdir -p tmp/stage-01/rendered
+          kustomize build apps/overlays/stage-01/** > tmp/dev-01/rendered/all.yaml
 
-      - name: Push to dev branch
+      - name: Checkout stage-01 branch
+        uses: actions/checkout@v4
+        with:
+          ref: stage-01
+          path: stage-01
+
+      - name: Copy rendered output into stage-01
+        run: |
+          mkdir -p stage-01/rendered
+          cp tmp/dev-01/rendered/* stage-01/rendered/
+
+      - name: Commit and push to new PR branch
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b update-stage-rendered-${{ github.run_id }}
-          git add rendered/nginx/nginx.yaml
+          git add rendered/nginx/nginx.yam      
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
 
