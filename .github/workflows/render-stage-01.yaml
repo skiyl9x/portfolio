@@ -44,10 +44,12 @@ jobs:
           git checkout -b update-stage-rendered-${{ github.run_id }}
           mkdir -p rendered
           rsync -zavP ../tmp/stage/rendered/all.yaml rendered/all.yaml
+          git diff
           git add .
           tree
           git status
           git commit -m "Update rendered manifests for stage"
+          git log
           git push origin update-stage-rendered-${{ github.run_id }}
 
       - name: Create Pull Request to stage-01
