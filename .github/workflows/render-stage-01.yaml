@@ -41,7 +41,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b update-stage-rendered-${{ github.run_id }}
-          git add rendered   
+          git add .
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
 
