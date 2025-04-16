@@ -1,0 +1,50 @@
+name: Render to dev-01 branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**'
+
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install kustomize
+        run: |
+          curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Render nginx manifests for dev-01
+        run: |
+          mkdir -p tmp/dev-01/rendered/nginx
+          kustomize build apps/overlays/dev-01/nginx > tmp/dev-01/rendered/nginx/nginx.yaml
+
+      - name: Push to dev branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git checkout -b update-stage-rendered-${{ github.run_id }}
+          git add rendered/nginx/nginx.yaml
+          git commit -m "Update rendered manifests for stage"
+          git push origin update-stage-rendered-${{ github.run_id }}
+
+      - name: Create Pull Request to stage-01
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update rendered manifests for stage"
+          branch: update-stage-rendered-${{ github.run_id }}
+          base: stage-01
+          title: "Render & update stage-01 manifests"
+          body: |
+            This PR contains updated rendered manifests for the `stage-01` environment.
+            Triggered by changes in `main`.
