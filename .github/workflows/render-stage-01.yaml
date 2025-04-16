@@ -18,6 +18,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          path: main
 
       - name: Install kustomize
         run: |
@@ -27,7 +28,7 @@ jobs:
       - name: Render manifests for stage
         run: |
           mkdir -p tmp/stage/rendered
-          kustomize build apps/overlays/stage-01/** > tmp/stage/rendered/all.yaml
+          kustomize build main/apps/overlays/stage-01/** > tmp/stage/rendered/all.yaml
 
       - name: Checkout stage-01 branch
         uses: actions/checkout@v4
@@ -58,6 +59,7 @@ jobs:
           branch: update-stage-rendered-${{ github.run_id }}
           base: stage-01
           title: "Render & update stage-01 manifests"
+          path: main
           body: |
             This PR contains updated rendered manifests for the `stage-01` environment.
             Triggered by changes in `main`.
