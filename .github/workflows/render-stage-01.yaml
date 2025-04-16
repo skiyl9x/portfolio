@@ -38,7 +38,7 @@ jobs:
       - name: Copy rendered output into stage-01
         run: |
           mkdir -p stage-branch/rendered
-          cp tmp/stage/rendered/all.yaml stage-branch/rendered/all.yaml
+          rsync -zavP tmp/stage/rendered/all.yaml stage-branch/rendered/all.yaml
 
       - name: Commit and push to new PR branch
         run: |
