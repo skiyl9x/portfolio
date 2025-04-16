@@ -40,11 +40,12 @@ jobs:
           cp tmp/stage-01/rendered/* stage-01/rendered/
 
       - name: Commit and push to new PR branch
+        working-directory: stage-01
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git checkout -b update-stage-rendered-${{ github.run_id }}
-          git add rendered/nginx/nginx.yam      
+          git add rendered   
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
 
