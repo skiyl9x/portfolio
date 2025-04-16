@@ -1,4 +1,4 @@
-name: Render to dev-01 branch
+name: Render to stage-01 branch
 
 on:
   push:
