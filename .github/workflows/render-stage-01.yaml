@@ -59,7 +59,7 @@ jobs:
           branch: update-stage-rendered-${{ github.run_id }}
           base: stage-01
           title: "Render & update stage-01 manifests"
-          path: main
+          path: stage-branch
           body: |
             This PR contains updated rendered manifests for the `stage-01` environment.
             Triggered by changes in `main`.
