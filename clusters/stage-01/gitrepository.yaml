@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: rendered-dev01
+  name: rendered-stage01
   namespace: flux-system
 spec:
   interval: 1m
