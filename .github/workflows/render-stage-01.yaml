@@ -34,19 +34,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: stage-01
-          path: stage-branch
-
-      - name: Copy rendered output into stage-01
-        run: |
-          mkdir -p stage-branch/rendered
-          rsync -zavP tmp/stage/rendered/all.yaml stage-branch/rendered/all.yaml
+          path: stage-01
 
       - name: Commit and push to new PR branch
         run: |
-          cd stage-branch
+          cd stage-01
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git checkout -b update-stage-rendered-${{ github.run_id }}
+          mkdir -p rendered
+          rsync -zavP ../tmp/stage/rendered/all.yaml rendered/all.yaml
           git add rendered/all.yaml
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
@@ -59,7 +56,7 @@ jobs:
           branch: update-stage-rendered-${{ github.run_id }}
           base: stage-01
           title: "Render & update stage-01 manifests"
-          path: stage-branch
+          path: stage-01
           body: |
             This PR contains updated rendered manifests for the `stage-01` environment.
             Triggered by changes in `main`.
