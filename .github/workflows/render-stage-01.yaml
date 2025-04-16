@@ -45,6 +45,7 @@ jobs:
           mkdir -p rendered
           rsync -zavP ../tmp/stage/rendered/all.yaml rendered/all.yaml
           git add rendered/all.yaml
+          tree
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
 
