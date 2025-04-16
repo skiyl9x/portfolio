@@ -12,36 +12,40 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Checkout stage-01 branch
-        uses: actions/checkout@v4
-        with:
-          ref: stage-01
-          path: stage-01
+          ref: main
 
       - name: Install kustomize
         run: |
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Render nginx manifests for stage-01
+      - name: Render manifests for stage
         run: |
-          mkdir -p stage-01/rendered
-          kustomize build apps/overlays/stage-01/** > stage-01/rendered/all.yaml
+          mkdir -p tmp/stage/rendered
+          kustomize build apps/overlays/stage-01/** > tmp/stage/rendered/all.yaml
+
+      - name: Checkout stage-01 branch
+        uses: actions/checkout@v4
+        with:
+          ref: stage-01
+          path: stage-branch
+
+      - name: Copy rendered output into stage-01
+        run: |
+          cp tmp/stage/rendered/all.yaml stage-branch/rendered/all.yaml
 
       - name: Commit and push to new PR branch
-        working-directory: stage-01
         run: |
-          git config user.name "GitHub Actions"
+          cd stage-branch
+          git config user.name "github-actions"
           git config user.email "actions@github.com"
           git checkout -b update-stage-rendered-${{ github.run_id }}
-          git add rendered/
+          git add rendered/all.yaml
           git commit -m "Update rendered manifests for stage"
           git push origin update-stage-rendered-${{ github.run_id }}
 
