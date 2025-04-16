@@ -33,7 +33,7 @@ jobs:
       - name: Render nginx manifests for stage-01
         run: |
           mkdir -p stage-01/rendered
-          kustomize build main/apps/overlays/stage-01/** > stage-01/rendered/all.yaml
+          kustomize build apps/overlays/stage-01/** > stage-01/rendered/all.yaml
 
       - name: Commit and push to new PR branch
         working-directory: stage-01
