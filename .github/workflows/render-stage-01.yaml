@@ -36,9 +36,10 @@ jobs:
           path: stage-01
 
       - name: Copy rendered output into stage-01
+        working-directory: stage-01
         run: |
-          mkdir -p stage-01/rendered
-          cp tmp/stage-01/rendered/* stage-01/rendered/
+          mkdir -p rendered
+          cp -v ../tmp/stage-01/rendered/* rendered/
 
       - name: Commit and push to new PR branch
         working-directory: stage-01
