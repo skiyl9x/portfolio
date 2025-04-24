@@ -75,7 +75,6 @@ jobs:
         working-directory: stage-01
         run: |
 
-          sed -e -x -o pipefail
           BASE_BRANCH=$(git show-branch -a 2>/dev/null \
           | grep '\*' \
           | grep -v `git rev-parse --abbrev-ref HEAD` \
