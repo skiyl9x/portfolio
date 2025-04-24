@@ -71,7 +71,7 @@ jobs:
 
       - name: Create pull request
         env:
-          GH_TOKEN: ${GITHUB_TOKEN}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: stage-01
         run: |
 
