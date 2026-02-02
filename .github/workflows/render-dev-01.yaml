@@ -23,20 +23,23 @@ jobs:
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Render nginx manifests for dev-01
+      - name: Render manifests
+        working-directory: apps/overlays/dev-01
         run: |
-          mkdir -p tmp/dev-01/rendered/nginx
-          kustomize build apps/overlays/dev-01/nginx > tmp/dev-01/rendered/nginx/nginx.yaml
+          for project in *; do
+            mkdir -p ../../../tmp/dev-01/rendered/${project}
+            kustomize build ${project} > tmp/dev-01/rendered/nginx/nginx.yaml
+          done
 
-      - name: Push to dev branch
+      - name: Push manifests
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git fetch origin dev-01
           git checkout dev-01
-          mkdir -p rendered/nginx
-          cp tmp/dev-01/rendered/nginx/nginx.yaml rendered/nginx/nginx.yaml
-          git add rendered/nginx/nginx.yaml
-          git commit -m "Rendered manifests for dev-01" || echo "No changes"
+          mkdir -p rendered/
+          cp -rf tmp/dev-01/rendered/* rendered/
+          git add rendered
+          git commit -m "update configuration" || echo "No changes"
           git push origin dev-01
 
