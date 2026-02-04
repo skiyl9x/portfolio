@@ -29,7 +29,7 @@ jobs:
         working-directory: main/apps/overlays/stage-01
         run: |
           for project in *; do
-            mkdir -p ../../../../tmp/stage-01/rendered/${project}.yaml
+            mkdir -p ../../../../tmp/stage-01/rendered
             kustomize build ${project} > ../../../../tmp/stage-01/rendered/${project}.yaml
           done
 
