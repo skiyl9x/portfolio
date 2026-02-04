@@ -70,6 +70,20 @@ jobs:
       #       This PR contains updated rendered manifests for the `stage-01` environment.
       #       Triggered by changes in `main`.
 
+ 
+      - name: Close old pull requests
+        if: steps.commit_and_push.outputs.result == 'done'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: stage-01
+        run:
+          prs=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
+
+          if [ -z "$prs" ]; then
+            echo "No open PRs targeting stage-01"
+          else
+            echo "$prs" | xargs -n1 gh pr close --comment "New PR is created from branch update-stage-01-rendered-${{ github.run_id }}"
+          fi
 
       - name: Create pull request
         if: steps.commit_and_push.outputs.result == 'done'
