@@ -26,11 +26,11 @@ jobs:
           sudo mv kustomize /usr/local/bin/
 
       - name: Render manifests
-        working-directory: apps/overlays/stage-01
+        working-directory: main/apps/overlays/stage-01
         run: |
           for project in *; do
-            mkdir -p ../../../tmp/dev-01/rendered/${project}.yaml
-            kustomize build ${project} > ../../../tmp/stage-01/rendered/{project}.yaml
+            mkdir -p ../../../../tmp/stage-01/rendered/${project}.yaml
+            kustomize build ${project} > ../../../../tmp/stage-01/rendered/${project}.yaml
           done
 
       - name: Checkout stage-01 branch
