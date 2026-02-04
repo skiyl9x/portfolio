@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
+          path: main
 
       - name: Install kustomize
         run: |
@@ -24,21 +26,22 @@ jobs:
           sudo mv kustomize /usr/local/bin/
 
       - name: Render manifests
-        working-directory: apps/overlays/dev-01
+        working-directory: main/apps/overlays/dev-01
         run: |
           for project in *; do
-            mkdir -p ../../../tmp/dev-01/rendered/${project}
-            kustomize build ${project} > ../../../tmp/dev-01/rendered/nginx/nginx.yaml
+            mkdir -p ../../../../tmp/dev-01/rendered/${project}
+            kustomize build ${project} > ../../../../tmp/dev-01/rendered/${project}.yaml
           done
 
       - name: Push manifests
+        working-directory: main
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git fetch origin dev-01
           git checkout dev-01
           mkdir -p rendered/
-          cp -rf tmp/dev-01/rendered/* rendered/
+          cp -rf ../tmp/dev-01/rendered/* rendered/
           git add rendered
           git commit -m "update configuration" || echo "No changes"
           git push origin dev-01
