@@ -49,7 +49,7 @@ jobs:
           git config user.email "actions@github.com"
           git checkout -b update-stage-01-rendered-${{ github.run_id }}
           mkdir -p rendered
-          rsync -zavP ../tmp/stage/rendered/* rendered/
+          rsync -zavP ../tmp/stage-01/rendered/* rendered/
           git add .
           if git commit -m "Update rendered manifests for stage-01"; then
             git push --set-upstream origin update-stage-01-rendered-${{ github.run_id }}
