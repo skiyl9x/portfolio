@@ -50,7 +50,7 @@ jobs:
           git add .
           tree
           git status
-          git commit -m "Update rendered manifests for stage"
+          git commit -m "Update rendered manifests for stage" || exit 0
           git log
           git status
           git push --set-upstream origin update-stage-rendered-${{ github.run_id }}
