@@ -76,7 +76,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: stage-01
-        run:
+        run: |
           prs=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
 
           if [ -z "$prs" ]; then
