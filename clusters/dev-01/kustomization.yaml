@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dev01-nginx
+  name: dev01
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./rendered/nginx
+  path: ./rendered
   prune: true
   sourceRef:
     kind: GitRepository
