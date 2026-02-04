@@ -28,7 +28,7 @@ jobs:
         run: |
           for project in *; do
             mkdir -p ../../../tmp/dev-01/rendered/${project}
-            kustomize build ${project} > tmp/dev-01/rendered/nginx/nginx.yaml
+            kustomize build ${project} > ../../../tmp/dev-01/rendered/nginx/nginx.yaml
           done
 
       - name: Push manifests
