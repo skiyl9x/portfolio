@@ -13,19 +13,19 @@ jobs:
   render:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
+      - name: Checkout Main Branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: main
           path: main
 
-      - name: Install kustomize
+      - name: Install Kustomize
         run: |
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Render manifests
+      - name: Render Manifests
         working-directory: main/apps/overlays/stage-01
         run: |
           for project in *; do
@@ -33,14 +33,14 @@ jobs:
             kustomize build ${project} > ../../../../tmp/stage-01/rendered/${project}.yaml
           done
 
-      - name: Checkout stage-01 branch
+      - name: Checkout Target Branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: stage-01
           path: stage-01
 
-      - name: Commit and push to new PR branch
+      - name: Commit and Push to Rendered Branch
         id: commit_and_push
         working-directory: stage-01
         run: |
@@ -71,31 +71,18 @@ jobs:
       #       This PR contains updated rendered manifests for the `stage-01` environment.
       #       Triggered by changes in `main`.
 
-      - name: Create pull request
+      - name: Create PR
         if: steps.commit_and_push.outputs.result == 'done'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: stage-01
         run: |
           set -x
-          PR_IDS_OLD=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
-          
-          # 
-          BASE_BRANCH=$(git show-branch -a 2>/dev/null \
-          | grep '\*' \
-          | grep -v `git rev-parse --abbrev-ref HEAD` \
-          | head -n1 \
-          | sed 's/.*\[\(.*\)\].*/\1/' \
-          | sed 's/[\^~].*//') 
-          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
-          PR_TITLE="Update stage-01"
-          PR_LABEL_ENV=$(echo ${BASE_BRANCH} | awk -F "-" '{print $3"-"$4}')
-
-          sleep 2
-          # create new pull request and save the url
-          PR_URL=$(gh pr create --base ${BASE_BRANCH} -t "${PR_TITLE}"  --body "" --json url -q .url)
-          # Delete old pull requests with the same base branch
-          if [ -n "${PR_IDS_OLD}" ]; then
-            echo "${PR_IDS_OLD}" | xargs -n1 gh pr close --comment "New PR is created ${PR_URL}"
+          # Get numbers of old pull requests
+          PR_NUMS_OLD=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
+          # Create new pull request and save the url
+          PR_URL=$(gh pr create -t "stage-01: new updates with id ${{ github.run_id }}" --body "")
+          # Delete old pull requests and branches
+          if [ -n "${PR_NUMS_OLD}" ]; then
+            echo "${PR_NUMS_OLD}" | xargs -n1 gh pr close --delete-branch --comment "New PR is created: ${PR_URL}"
           fi
