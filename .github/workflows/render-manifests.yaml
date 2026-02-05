@@ -35,7 +35,7 @@ jobs:
           for app_dir in apps/overlays/${{ matrix.target_branch }}/*; do
             app_name=$(basename ${app_dir})
             mkdir -p ../tmp/rendered
-            kustomize build apps/overlays/${app_name} > ../tmp/rendered/${app_name}.yaml
+            kustomize build apps/overlays/${{ matrix.target_branch }}/${app_name} > ../tmp/rendered/${app_name}.yaml
           done
 
       - name: Checkout Target Branch
