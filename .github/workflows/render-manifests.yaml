@@ -74,8 +74,8 @@ jobs:
           if git commit -m "Update rendered manifests for ${{ matrix.target_branch }}"; then
             old_pr_num=$(gh pr list --base ${{ matrix.target_branch }} --state open --json number -q '.[].number')
             if [ -n "${old_pr_num}" ]; then
-              git fetch origin pull/${pr_num_old}/head:pr-${pr_num_old}
-              if ! git diff --quiet HEAD pr-${pr_num_old}; then
+              git fetch origin pull/${old_pr_num}/head:pr-${old_pr_num}
+              if ! git diff --quiet HEAD pr-${old_pr_num}; then
                 git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
                 pr_url=$(gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with run id ${{ github.run_id }}" --body "")
                 gh pr close --delete-branch --comment "Replaced by PR ${pr_url}"
