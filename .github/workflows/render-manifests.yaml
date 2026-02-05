@@ -58,10 +58,11 @@ jobs:
           git commit -m "Update rendered manifests with run id ${{ github.run_id }}" || echo "No changes"
           git push origin ${{ matrix.target_branch }}
 
-      - name: Commit and Push to Rendered Branch
-        id: commit_and_push
+      - name: Create PR
         if: ${{ matrix.target_branch == 'stage-01' || matrix.target_branch == 'prod-01' }}
         working-directory: ${{ matrix.target_branch }}
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
           git config user.name "github-actions"
@@ -71,24 +72,15 @@ jobs:
           cp -rf ../tmp/rendered/* rendered/
           git add .
           if git commit -m "Update rendered manifests for ${{ matrix.target_branch }}"; then
-            git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
-            printf "result=done\n" >> "${GITHUB_OUTPUT}"
-          else
-            printf "result=skipped\n" >> "${GITHUB_OUTPUT}"
-          fi
-
-      - name: Create PR
-        if: ${{ (matrix.target_branch == 'stage-01' || matrix.target_branch == 'prod-01') && steps.commit_and_push.outputs.result == 'done' }}
-        working-directory: ${{ matrix.target_branch }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -x
-          # Get numbers of old pull requests
-          PR_NUMS_OLD=$(gh pr list --base ${{ matrix.target_branch }} --state open --json number -q '.[].number')
-          # Create new pull request and save the url
-          PR_URL=$(gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with id ${{ github.run_id }}" --body "")
-          # Delete old pull requests and branches
-          if [ -n "${PR_NUMS_OLD}" ]; then
-            echo "${PR_NUMS_OLD}" | xargs -n1 gh pr close --delete-branch --comment "New PR is created: ${PR_URL}"
+            old_pr_num=$(gh pr list --base ${{ matrix.target_branch }} --state open --json number -q '.[].number')
+            if [ -n "${old_pr_num}" ]; then
+              git fetch origin pull/${pr_num_old}/head:pr-${pr_num_old}
+              if ! git diff --quiet HEAD pr-${pr_num_old};
+                git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
+                pr_url=$(gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with run id ${{ github.run_id }}" --body "")
+                gh pr close --delete-branch --comment "Replaced by PR ${pr_url}"
+              else
+                printf "skipped\n"
+              fi
+            fi
           fi

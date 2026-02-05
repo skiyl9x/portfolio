@@ -4,6 +4,6 @@ resources:
   - ../../../base/nginx
 images:
   - name: nginx
-    newTag: 1.25.5
+    newTag: 1.25.1
 namespace: stage-01
 
