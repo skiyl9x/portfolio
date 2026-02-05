@@ -47,16 +47,17 @@ jobs:
           set -x
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git checkout -b update-stage-01-rendered-${{ github.run_id }}
+          git checkout -b rendered--stage-01--${{ github.run_id }}
           mkdir -p rendered
           rsync -zavP ../tmp/stage-01/rendered/* rendered/
           git add .
           if git commit -m "Update rendered manifests for stage-01"; then
-            git push --set-upstream origin update-stage-01-rendered-${{ github.run_id }}
+            git push --set-upstream origin rendered--stage-01--${{ github.run_id }}
             printf "result=done\n" >> "${GITHUB_OUTPUT}"
           else
             printf "result=skipped\n" >> "${GITHUB_OUTPUT}"
           fi
+
       # - name: Create Pull Request to stage-01
       #   uses: peter-evans/create-pull-request@v5
       #   with:
@@ -70,21 +71,6 @@ jobs:
       #       This PR contains updated rendered manifests for the `stage-01` environment.
       #       Triggered by changes in `main`.
 
- 
-      - name: Close old pull requests
-        if: steps.commit_and_push.outputs.result == 'done'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: stage-01
-        run: |
-          prs=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
-
-          if [ -z "$prs" ]; then
-            echo "No open PRs targeting stage-01"
-          else
-            echo "$prs" | xargs -n1 gh pr close --comment "New PR is created from branch update-stage-01-rendered-${{ github.run_id }}"
-          fi
-
       - name: Create pull request
         if: steps.commit_and_push.outputs.result == 'done'
         env:
@@ -92,6 +78,9 @@ jobs:
         working-directory: stage-01
         run: |
           set -x
+          PR_IDS_OLD=$(gh pr list --base stage-01 --state open --json number -q '.[].number')
+          
+          # 
           BASE_BRANCH=$(git show-branch -a 2>/dev/null \
           | grep '\*' \
           | grep -v `git rev-parse --abbrev-ref HEAD` \
@@ -104,4 +93,9 @@ jobs:
           PR_LABEL_ENV=$(echo ${BASE_BRANCH} | awk -F "-" '{print $3"-"$4}')
 
           sleep 2
-          gh pr create --base ${BASE_BRANCH} -t "${PR_TITLE}"  --body ""
+          # create new pull request and save the url
+          PR_URL=$(gh pr create --base ${BASE_BRANCH} -t "${PR_TITLE}"  --body "" --json url -q .url)
+          # Delete old pull requests with the same base branch
+          if [ -n "${PR_IDS_OLD}" ]; then
+            echo "${PR_IDS_OLD}" | xargs -n1 gh pr close --comment "New PR is created ${PR_URL}"
+          fi
