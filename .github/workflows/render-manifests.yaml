@@ -42,12 +42,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ env.matrix.target_branch }}
-          path: ${{ env.matrix.target_branch }}
+          ref: ${{ matrix.target_branch }}
+          path: ${{ matrix.target_branch }}
 
       - name: Push Manifests
         if: ${{ matrix.target_branch != 'stage-01' && matrix.target_branch != 'prod-01' }}
-        working-directory: ${{ env.matrix.target_branch }}
+        working-directory: ${{ matrix.target_branch }}
         run: |
           set -x
           git config user.name "GitHub Actions"
@@ -56,38 +56,38 @@ jobs:
           cp -rf ../tmp/rendered/* rendered/
           git add rendered
           git commit -m "Update rendered manifests with run id ${{ github.run_id }}" || echo "No changes"
-          git push origin ${{ env.matrix.target_branch }}
+          git push origin ${{ matrix.target_branch }}
 
       - name: Commit and Push to Rendered Branch
         id: commit_and_push
-        if: ${{ matrix.target_branch == 'stage' || matrix.target_branch == 'prod' }}
-        working-directory: ${{ env.matrix.target_branch }}
+        if: ${{ matrix.target_branch == 'stage-01' || matrix.target_branch == 'prod-01' }}
+        working-directory: ${{ matrix.target_branch }}
         run: |
           set -x
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git checkout -b rendered--${{ env.matrix.target_branch }}--${{ github.run_id }}
+          git checkout -b rendered--${{ matrix.target_branch }}--${{ github.run_id }}
           mkdir -p rendered
           cp -rf ../tmp/rendered/* rendered/
           git add .
-          if git commit -m "Update rendered manifests for ${{ env.matrix.target_branch }}"; then
-            git push --set-upstream origin rendered--${{ env.matrix.target_branch }}--${{ github.run_id }}
+          if git commit -m "Update rendered manifests for ${{ matrix.target_branch }}"; then
+            git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
             printf "result=done\n" >> "${GITHUB_OUTPUT}"
           else
             printf "result=skipped\n" >> "${GITHUB_OUTPUT}"
           fi
 
       - name: Create PR
-        if: ${{ (matrix.target_branch == 'stage' || matrix.target_branch == 'prod') && steps.commit_and_push.outputs.result == 'done' }}
-        working-directory: ${{ env.matrix.target_branch }}
+        if: ${{ (matrix.target_branch == 'stage-01' || matrix.target_branch == 'prod-01') && steps.commit_and_push.outputs.result == 'done' }}
+        working-directory: ${{ matrix.target_branch }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
           # Get numbers of old pull requests
-          PR_NUMS_OLD=$(gh pr list --base ${{ env.matrix.target_branch }} --state open --json number -q '.[].number')
+          PR_NUMS_OLD=$(gh pr list --base ${{ matrix.target_branch }} --state open --json number -q '.[].number')
           # Create new pull request and save the url
-          PR_URL=$(gh pr create --base ${{ env.matrix.target_branch }} -t "${{ env.matrix.target_branch }}: new updates with id ${{ github.run_id }}" --body "")
+          PR_URL=$(gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with id ${{ github.run_id }}" --body "")
           # Delete old pull requests and branches
           if [ -n "${PR_NUMS_OLD}" ]; then
             echo "${PR_NUMS_OLD}" | xargs -n1 gh pr close --delete-branch --comment "New PR is created: ${PR_URL}"
