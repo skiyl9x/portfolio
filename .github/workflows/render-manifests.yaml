@@ -78,7 +78,7 @@ jobs:
               if ! git diff --quiet HEAD pr-${old_pr_num}; then
                 git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
                 pr_url=$(gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with run id ${{ github.run_id }}" --body "")
-                gh pr close --delete-branch --comment "Replaced by PR ${pr_url}"
+                gh pr close --delete-branch --comment "Replaced by PR ${pr_url}" ${old_pr_num}
               else
                 printf "skipped\n"
               fi
