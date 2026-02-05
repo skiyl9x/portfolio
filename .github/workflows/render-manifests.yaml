@@ -1,0 +1,92 @@
+name: Render Manifests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target_branch: [dev-01, stage-01, prod-01]
+    steps:
+      - name: Checkout Main Branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+          path: main
+
+      - name: Install Kustomize
+        run: |
+          curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Render Manifests
+        run: |
+          set -x
+          for project in main/apps/overlays/*; do
+            mkdir -p tmp/rendered
+            kustomize build main/apps/overlays/${project} > tmp/rendered/${project}.yaml
+          done
+
+      - name: Checkout Target Branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.matrix.target_branch }}
+          path: ${{ env.matrix.target_branch }}
+
+      - name: Push Manifests
+        if: ${{ matrix.target_branch != 'stage-01' && matrix.target_branch != 'prod-01' }}
+        working-directory: ${{ env.matrix.target_branch }}
+        run: |
+          set -x
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          mkdir -p rendered/
+          cp -rf ../tmp/rendered/* rendered/
+          git add rendered
+          git commit -m "Update rendered manifests with run id ${{ github.run_id }}" || echo "No changes"
+          git push origin ${{ env.matrix.target_branch }}
+
+      - name: Commit and Push to Rendered Branch
+        id: commit_and_push
+        if: ${{ matrix.target_branch == 'stage' || matrix.target_branch == 'prod' }}
+        working-directory: ${{ env.matrix.target_branch }}
+        run: |
+          set -x
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git checkout -b rendered--${{ env.matrix.target_branch }}--${{ github.run_id }}
+          mkdir -p rendered
+          cp -rf ../tmp/rendered/* rendered/
+          git add .
+          if git commit -m "Update rendered manifests for ${{ env.matrix.target_branch }}"; then
+            git push --set-upstream origin rendered--${{ env.matrix.target_branch }}--${{ github.run_id }}
+            printf "result=done\n" >> "${GITHUB_OUTPUT}"
+          else
+            printf "result=skipped\n" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Create PR
+        if: ${{ (matrix.target_branch == 'stage' || matrix.target_branch == 'prod') && steps.commit_and_push.outputs.result == 'done' }}
+        working-directory: ${{ env.matrix.target_branch }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+          # Get numbers of old pull requests
+          PR_NUMS_OLD=$(gh pr list --base ${{ env.matrix.target_branch }} --state open --json number -q '.[].number')
+          # Create new pull request and save the url
+          PR_URL=$(gh pr create --base ${{ env.matrix.target_branch }} -t "${{ env.matrix.target_branch }}: new updates with id ${{ github.run_id }}" --body "")
+          # Delete old pull requests and branches
+          if [ -n "${PR_NUMS_OLD}" ]; then
+            echo "${PR_NUMS_OLD}" | xargs -n1 gh pr close --delete-branch --comment "New PR is created: ${PR_URL}"
+          fi
