@@ -5,4 +5,5 @@ resources:
 images:
   - name: nginx
     newTag: 1.25.5
+namespace: stage-01
 
