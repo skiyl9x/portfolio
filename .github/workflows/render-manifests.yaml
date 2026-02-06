@@ -13,6 +13,7 @@ jobs:
   render:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         target_branch: [dev, stage, prod]
     steps:
