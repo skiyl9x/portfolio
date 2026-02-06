@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dev01
+  name: dev-01
   namespace: flux-system
 spec:
   interval: 1m
@@ -9,6 +9,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: rendered-dev01
+    name: rendered-dev-01
   targetNamespace: dev-01
 

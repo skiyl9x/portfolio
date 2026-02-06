@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: stage-01
+  name: prod-01
   namespace: flux-system
 spec:
   interval: 1m
@@ -9,6 +9,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: rendered-stage-01
-  targetNamespace: stage-01
+    name: rendered-prod-01
+  targetNamespace: prod-01
 

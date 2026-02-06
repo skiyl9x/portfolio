@@ -1,13 +1,13 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: rendered-dev-01
+  name: rendered-prod-01
   namespace: flux-system
 spec:
   interval: 1m
   url: https://github.com/skiyl9x/portfolio.git
   ref:
-    branch: dev-01
+    branch: prod-01
   ignore: |
     # keep everything
 
