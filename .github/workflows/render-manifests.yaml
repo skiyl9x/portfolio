@@ -32,7 +32,7 @@ jobs:
         working-directory: main
         run: |
           set -x
-          for app_env in app/overlays/${{ matrix.target_branch }}-*; do
+          for app_env in app/overlays/${{ matrix.target_branch }}* ; do
             for app_dir in ${app_env}/*; do
               app_name=$(basename ${app_dir})
               mkdir -p ../tmp/rendered/apps/${app_env}
