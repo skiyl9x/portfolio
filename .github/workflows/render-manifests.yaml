@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target_branch: [dev-01, stage-01, prod-01]
+        target_branch: [dev, stage, prod]
     steps:
       - name: Checkout Main Branch
         uses: actions/checkout@v4
@@ -28,14 +28,26 @@ jobs:
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Render Manifests
+      - name: Render App Manifests
         working-directory: main
         run: |
           set -x
-          for app_dir in apps/overlays/${{ matrix.target_branch }}/*; do
+          for app_env in app/overlays/${{ matrix.target_branch }}-*; do
+            for app_dir in ${app_env}/*; do
+              app_name=$(basename ${app_dir})
+              mkdir -p ../tmp/rendered/apps/${app_env}
+              kustomize build ${app_dir} > ../tmp/rendered/apps/${app_env}/${app_name}.yaml
+            done
+          done
+
+      - name: Render Infra Manifests
+        working-directory: main
+        run: |
+          set -x
+          for app_dir in infra/overlays/${{ matrix.target_branch }}/*; do
             app_name=$(basename ${app_dir})
-            mkdir -p ../tmp/rendered
-            kustomize build apps/overlays/${{ matrix.target_branch }}/${app_name} > ../tmp/rendered/${app_name}.yaml
+            mkdir -p ../tmp/rendered/infrastructure
+            kustomize build ${app_dir} > ../tmp/rendered/infrastructure/${app_name}.yaml
           done
 
       - name: Checkout Target Branch
@@ -46,20 +58,20 @@ jobs:
           path: ${{ matrix.target_branch }}
 
       - name: Push Manifests
-        if: ${{ matrix.target_branch != 'stage-01' && matrix.target_branch != 'prod-01' }}
+        if: ${{ matrix.target_branch != 'stage' && matrix.target_branch != 'prod' }}
         working-directory: ${{ matrix.target_branch }}
         run: |
           set -x
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           mkdir -p rendered/
-          cp -rf ../tmp/rendered/* rendered/
-          git add rendered
+          cp -rf ../tmp/rendered/* .
+          git add .
           git commit -m "Update rendered manifests with run id ${{ github.run_id }}" || echo "No changes"
           git push origin ${{ matrix.target_branch }}
 
       - name: Create PR
-        if: ${{ matrix.target_branch == 'stage-01' || matrix.target_branch == 'prod-01' }}
+        if: ${{ matrix.target_branch == 'stage' || matrix.target_branch == 'prod' }}
         working-directory: ${{ matrix.target_branch }}
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -69,7 +81,7 @@ jobs:
           git config user.email "actions@github.com"
           git checkout -b rendered--${{ matrix.target_branch }}--${{ github.run_id }}
           mkdir -p rendered
-          cp -rf ../tmp/rendered/* rendered/
+          cp -rf ../tmp/rendered/* .
           git add .
           if git commit -m "Update rendered manifests for ${{ matrix.target_branch }}"; then
             old_pr_num=$(gh pr list --base ${{ matrix.target_branch }} --state open --json number -q '.[].number')
