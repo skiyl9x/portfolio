@@ -42,15 +42,15 @@ jobs:
             done
           done
 
-#      - name: Render Infra Manifests
-#        working-directory: main
-#        run: |
-#          set -x
-#          for app_dir in infrastructure/overlays/${{ matrix.target_branch }}/*; do
-#            app_name=$(basename ${app_dir})
-#            mkdir -p ../tmp/rendered/infrastructure
-#            kustomize build ${app_dir} > ../tmp/rendered/infrastructure/${app_name}.yaml
-#          done
+      - name: Render Infrastructure Manifests
+        working-directory: main
+        run: |
+          set -x
+          for tool_dir in infrastructure/overlays/${{ matrix.target_branch }}/*; do
+            tool_name=$(basename ${tool_dir})
+            mkdir -p ../tmp/rendered/infrastructure
+            kustomize build ${tool_dir} > ../tmp/rendered/infrastructure/${tool_name}.yaml || true
+          done
 
       - name: Checkout Target Branch
         uses: actions/checkout@v4
