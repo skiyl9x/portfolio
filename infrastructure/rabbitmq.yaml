@@ -3,31 +3,20 @@ kind: Namespace
 metadata:
   name: rabbitmq
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
 metadata:
   name: rabbitmq
   namespace: rabbitmq
 spec:
-  chart:
-    spec:
-      chart: rabbitmq
-      sourceRef:
-        kind: HelmRepository
-        name: bitnami
-        namespace: flux-system
-      version: 12.x
-  install:
-    createNamespace: true
-  interval: 5m
-  values:
-    auth:
-      erlangCookie: cookie123
-      password: admin
-      username: admin
-    metrics:
-      enabled: true
-    persistence:
-      enabled: true
-      size: 5Gi
-    replicaCount: 3
+  rabbitmq:
+    additionalConfig: |
+      vm_memory_high_watermark.relative = 0.4
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 512Mi
