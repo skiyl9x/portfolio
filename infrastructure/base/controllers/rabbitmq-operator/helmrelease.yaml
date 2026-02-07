@@ -21,6 +21,7 @@ spec:
     
     clusterOperator:
       image:
+        repository: bitnami/rabbitmq-cluster-operator
         # We override the broken default tag with a known stable one
         tag: "4.4.34"
     fullnameOverride: "rabbitmq-operator"
