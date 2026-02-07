@@ -1,0 +1,10 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  replicas: 1 # Default base
+  rabbitmq:
+    additionalConfig: |
+      vm_memory_high_watermark.relative = 0.4

@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: flux-system   # Flux control plane namespace
+spec:
+  url: https://charts.bitnami.com/bitnami
+  interval: 1h            # how often Flux checks for updates
+
