@@ -6,3 +6,4 @@ resources:
 - gitrepositories/rendered-dev.yaml
 - gitrepositories/rendered-stage.yaml
 - helmrepositories/bitnami.yaml
+- helmrepositories/bitnami-oci.yaml
