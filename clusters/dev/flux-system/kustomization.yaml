@@ -6,6 +6,3 @@ resources:
 - gitrepositories/rendered-dev.yaml
 - gitrepositories/rendered-stage.yaml
 - helmrepositories/bitnami.yaml
-- ../apps-dev-01.yaml
-- ../apps-stage-01.yaml
-- ../infrastructure.yaml 
