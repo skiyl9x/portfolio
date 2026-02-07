@@ -18,4 +18,8 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    image:
+      # We override the broken default tag with a known stable one
+      tag: "4.4.34"
     fullnameOverride: "rabbitmq-operator"
+
