@@ -9,9 +9,9 @@ spec:
       chart: rabbitmq-cluster-operator
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami-oci
         namespace: flux-system
-      version: 4.x.x
+      version: 4.4.34
   install:
     crds: CreateReplace
   interval: 1h
