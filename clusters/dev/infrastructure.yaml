@@ -24,7 +24,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-operators # The magic line
+    - name: infra-controllers  # The magic line
   interval: 1m
   path: ./infrastructure/configs
   prune: true
