@@ -20,5 +20,6 @@ spec:
   values:
     clusterOperator:
       image:
+        repository: bitnami/rabbitmq-cluster-operator
         tag: 4.4.34
     fullnameOverride: rabbitmq-operator
