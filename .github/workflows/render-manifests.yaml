@@ -96,5 +96,7 @@ jobs:
               else
                 printf "skipped\n"
               fi
-            fi
+            else
+              git push --set-upstream origin rendered--${{ matrix.target_branch }}--${{ github.run_id }}
+              gh pr create --base ${{ matrix.target_branch }} -t "${{ matrix.target_branch }}: new updates with run id ${{ github.run_id }}" --body ""
           fi
