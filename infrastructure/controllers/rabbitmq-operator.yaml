@@ -18,6 +18,7 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    clusterOperator:
+      image:
+        tag: 4.4.34
     fullnameOverride: rabbitmq-operator
-    rabbitmqImage:
-      tag: 4.4.34
