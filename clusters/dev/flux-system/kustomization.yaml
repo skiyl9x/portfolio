@@ -5,3 +5,4 @@ resources:
 - gotk-sync.yaml
 - ../apps-dev-01.yaml
 - ../apps-stage-01.yaml
+- ../infrastructure.yaml 
