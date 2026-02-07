@@ -1,13 +1,33 @@
+# Layer 1: The "Engine" (Operators, CRDs, HelmRepos)
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: infrastructure
+  name: infra-controllers
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./infrastructure
+  # Point to a specific folder containing ALL operator overlays
+  path: ./infrastructure/controllers 
   prune: true
   sourceRef:
     kind: GitRepository
     name: rendered-dev
+  # This ensures Flux waits until the APIs are actually usable
+  wait: true 
 
+---
+# Layer 2: The "Workloads" (RabbitmqCluster, Databases, Ingress)
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infra-configs
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: infra-operators # The magic line
+  interval: 1m
+  path: ./infrastructure/configs
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rendered-dev

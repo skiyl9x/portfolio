@@ -1,5 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../../base/rabbitmq-operator
+  - ../../../../base/controllers/rabbitmq-operator
 # You can add patches here later if Dev needs a specific version

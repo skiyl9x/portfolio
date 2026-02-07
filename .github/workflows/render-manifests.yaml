@@ -47,11 +47,18 @@ jobs:
         working-directory: main
         run: |
           set -x
-          for tool_dir in infrastructure/overlays/${{ matrix.target_branch }}/*; do
-            tool_name=$(basename ${tool_dir})
-            mkdir -p ../tmp/rendered/infrastructure
-            kustomize build ${tool_dir} > ../tmp/rendered/infrastructure/${tool_name}.yaml || true
+          for controller_dir in infrastructure/overlays/${{ matrix.target_branch }}/controllers/*; do
+            controller_name=$(basename ${controller_dir})
+            mkdir -p ../tmp/rendered/infrastructure/controllers
+            kustomize build ${controller_dir} > ../tmp/rendered/infrastructure/controllers/${controller_name}.yaml || true
           done
+
+          for config_dir in infrastructure/overlays/${{ matrix.target_branch }}/configs/*; do
+            config_name=$(basename ${config_dir})
+            mkdir -p ../tmp/rendered/infrastructure/configs
+            kustomize build ${config_dir} > ../tmp/rendered/infrastructure/configs/${config_name}.yaml || true
+          done
+
 
       - name: Checkout Target Branch
         uses: actions/checkout@v4
