@@ -4,16 +4,5 @@ metadata:
   name: rabbitmq
   namespace: rabbitmq-system
 spec:
-  replicas: 1 # Default base
+  replicas: 3 # Default base
   image: rabbitmq:3.12-management
-  override:
-    statefulSet:
-      spec:
-        template:
-          spec:
-            containers:
-              - name: rabbitmq # Ім'я контейнера обов'язкове для ідентифікації при злитті
-                securityContext:
-                  runAsUser: 999
-            securityContext:
-              fsGroup: 999
