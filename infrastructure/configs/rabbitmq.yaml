@@ -7,7 +7,7 @@ apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: rabbitmq
-  namespace: rabbitm-system
+  namespace: rabbitmq-system
 spec:
   image: rabbitmq:3.12-management
   replicas: 1
