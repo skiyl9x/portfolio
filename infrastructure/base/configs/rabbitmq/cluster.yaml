@@ -6,9 +6,9 @@ metadata:
 spec:
   replicas: 3
   image: rabbitmq:3.12-management
-  persistence:
-    storageClassName: local-storage
-    storage: 20Gi
+ # persistence:
+ #   storageClassName: local-storage
+ #   storage: 20Gi
   override:
     statefulSet:
       spec:
