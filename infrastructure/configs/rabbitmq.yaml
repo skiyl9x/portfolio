@@ -10,4 +10,4 @@ metadata:
   namespace: rabbitmq-system
 spec:
   image: rabbitmq:3.12-management
-  replicas: 1
+  replicas: 0
