@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: rabbitmq-system
 ---
-apiVersion: rabbitmq.com/v1
+apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: rabbitmq
