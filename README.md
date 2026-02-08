@@ -13,3 +13,8 @@ Command to bootstrap everything from scratch
 ```
 flux bootstrap git --url=https://github.com/skiyl9x/portfolio.git --branch=main --path=clusters/dev --token-auth --namespace=flux-system
 ```
+
+Enable storage-provisioner-rancher for minikube
+```
+minikube addons enable storage-provisioner-rancher
+```
