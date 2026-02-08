@@ -5,20 +5,3 @@ kind: Kustomization
 # Use base rabbitmq
 resources:
   - ../../../../base/configs/rabbitmq
-patches:
-  - target:
-      kind: RabbitmqCluster
-      name: rabbitmq
-    patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 1
-      - op: add
-        path: /spec/resources
-        value:
-          limits:
-            cpu: 500m
-            memory: 1Gi
-          requests:
-            cpu: 200m
-            memory: 512Mi
