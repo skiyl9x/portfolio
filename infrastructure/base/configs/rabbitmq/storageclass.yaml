@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+# Для local-storage ми не використовуємо автоматичний провізіонер
+provisioner: kubernetes.io/no-provisioner 
+# КРИТИЧНО: чекаємо, поки Pod буде призначений на ноду, перш ніж прив'язувати PV
+volumeBindingMode: WaitForFirstConsumer
