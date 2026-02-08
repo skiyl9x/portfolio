@@ -11,7 +11,7 @@ flux uninstall --namespace=flux-system
 Command to bootstrap everything from scratch
 
 ```
-flux bootstrap git --url=https://github.com/skiyl9x/portfolio.git --branch=main --path=clusters/dev --token-auth --namespace=flux-system
+flux bootstrap git --url=ssh://git@github.com/skiyl9x/portfolio --branch=main --private-key-file=../github-fluxcd-portfolio --password=fluxcd --path=clusters/dev --namespace=flux-system
 ```
 
 Enable storage-provisioner-rancher for minikube
