@@ -10,15 +10,4 @@ metadata:
   namespace: rabbitmq-system
 spec:
   image: rabbitmq:3.12-management
-  override:
-    statefulSet:
-      spec:
-        template:
-          spec:
-            containers:
-            - name: rabbitmq
-              securityContext:
-                runAsUser: 999
-            securityContext:
-              fsGroup: 999
-  replicas: 1
+  replicas: 3
