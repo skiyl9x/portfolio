@@ -15,7 +15,10 @@ spec:
       spec:
         template:
           spec:
+            containers:
+            - name: rabbitmq
+              securityContext:
+                runAsUser: 999
             securityContext:
               fsGroup: 999
-              runAsUser: 999
   replicas: 1
