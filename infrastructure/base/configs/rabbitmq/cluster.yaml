@@ -11,6 +11,9 @@ spec:
       spec:
         template:
           spec:
+            containers:
+              - name: rabbitmq # Ім'я контейнера обов'язкове для ідентифікації при злитті
+                securityContext:
+                  runAsUser: 999
             securityContext:
-              fsGroup: 999    # Встановлює GID для підмонтованих дисків
-              runAsUser: 999  # Запускає процес RabbitMQ під UID 999
+              fsGroup: 999
