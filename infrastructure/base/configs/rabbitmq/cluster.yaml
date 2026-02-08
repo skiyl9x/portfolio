@@ -3,6 +3,6 @@ kind: RabbitmqCluster
 metadata:
   name: rabbitmq
   namespace: rabbitmq-system
-spec:
-  replicas: 3 # Default base
-  image: rabbitmq:3.12-management
+#spec:
+#  replicas: 3 # Default base
+#  image: rabbitmq:3.12-management
