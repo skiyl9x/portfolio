@@ -6,38 +6,10 @@ metadata:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: local-storage
-provisioner: kubernetes.io/no-provisioner
+  name: local-path
+provisioner: racher.io/local-path
+reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: rabbitmq-pv
-  namespace: rabbitmq-system
-spec:
-  accessModes:
-  - ReadWriteOnce
-  capacity:
-    storage: 20Gi
-  hostPath:
-    path: /mnt/app/rabbitmq
-    type: DirectoryOrCreate
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: rabbitmq-pvc
-  namespace: rabbitmq-system
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: local-storage
 ---
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
