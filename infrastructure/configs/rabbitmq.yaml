@@ -8,6 +8,3 @@ kind: RabbitmqCluster
 metadata:
   name: rabbitmq
   namespace: rabbitmq-system
-spec:
-  image: rabbitmq:3.12-management
-  replicas: 3
