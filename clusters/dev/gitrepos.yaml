@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  url: ssh://git@github.com/skiyl9x/portfolio
+  url: https://github.com/skiyl9x/portfolio.git
   ref:
     branch: dev      # <- dev branch з rendered manifests
 ---
@@ -16,7 +16,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  url: ssh://git@github.com/skiyl9x/portfolio
+  url: https://github.com/skiyl9x/portfolio.git
   ref:
     branch: stage      # <- stage branch з rendered manifests
 
