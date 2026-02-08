@@ -3,7 +3,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - storageclass.yaml
-  - pvc.yaml
-  - pv.yaml
   - cluster.yaml
 
