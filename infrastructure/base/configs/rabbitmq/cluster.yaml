@@ -4,5 +4,5 @@ metadata:
   name: rabbitmq
   namespace: rabbitmq-system
 spec:
-  replicas: 1 # Default base
+  replicas: 0 # Default base
   image: rabbitmq:3.12-management
