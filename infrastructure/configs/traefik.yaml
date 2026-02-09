@@ -20,7 +20,7 @@ spec:
   install:
     createNamespace: true
   interval: 1h0m0s
-  releaseName: traefik-system
+  releaseName: traefik
   storageNamespace: traefik-system
   targetNamespace: traefik-system
   values:
