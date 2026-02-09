@@ -18,3 +18,11 @@ Enable storage-provisioner-rancher for minikube
 ```
 minikube addons enable storage-provisioner-rancher
 ```
+
+
+
+Traefik installation
+```
+minikube addons enable metallb
+```
+
