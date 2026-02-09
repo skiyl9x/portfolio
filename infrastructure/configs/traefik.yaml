@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traefik-system
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik-system
+spec:
+  chart:
+    spec:
+      chart: traefik
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+      version: '>=34.0.0'
+  install:
+    createNamespace: true
+  interval: 1h0m0s
+  releaseName: traefik-system
+  storageNamespace: traefik-system
+  targetNamespace: traefik-system
+  values:
+    ingressRoute:
+      dashboard:
+        enabled: true
+    ports:
+      traefik:
+        expose:
+          default: true
+    providers:
+      kubernetesGateway:
+        enabled: true
