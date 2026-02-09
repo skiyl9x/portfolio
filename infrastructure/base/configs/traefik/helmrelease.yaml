@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik-system
+spec:
+  releaseName: traefik-system
+  targetNamespace: traefik-system
+  storageNamespace: traefik-system
+  install:
+    createNamespace: true
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: traefik
+      version: ">=34.0.0" # Adjust based on current latest version
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  values:
+    # Enable the modern Gateway API provider
+    providers:
+      kubernetesGateway:
+        enabled: true
+    
+    # Optional: Enable the Traefik Dashboard
+    ingressRoute:
+      dashboard:
+        enabled: true
+    
+    # Expose the dashboard on a specific port if needed
+    ports:
+      traefik:
+        expose:
+          default: true
