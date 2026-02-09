@@ -13,7 +13,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: ">=34.0.0" # Adjust based on current latest version
+      version: "39.0.0" # Adjust based on current latest version
       sourceRef:
         kind: HelmRepository
         name: traefik
