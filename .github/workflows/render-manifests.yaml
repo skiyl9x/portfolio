@@ -55,7 +55,7 @@ jobs:
             done
           fi
           if [ -d infrastructure/overlays/${{ matrix.target_branch }}/configs ]; then
-            for controller_dir in $(find infrastructure/overlays/${{ matrix.target_branch }}/configs -mindepth 1 -maxdepth 1 -type d); do
+            for config_dir in $(find infrastructure/overlays/${{ matrix.target_branch }}/configs -mindepth 1 -maxdepth 1 -type d); do
               config_name=$(basename ${config_dir})
               mkdir -p ../tmp/rendered/infrastructure/configs
               kustomize build ${config_dir} > ../tmp/rendered/infrastructure/configs/${config_name}.yaml
