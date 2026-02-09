@@ -50,13 +50,13 @@ jobs:
           for controller_dir in infrastructure/overlays/${{ matrix.target_branch }}/controllers/*; do
             controller_name=$(basename ${controller_dir})
             mkdir -p ../tmp/rendered/infrastructure/controllers
-            kustomize build ${controller_dir} > ../tmp/rendered/infrastructure/controllers/${controller_name}.yaml || true
+            kustomize build ${controller_dir} > ../tmp/rendered/infrastructure/controllers/${controller_name}.yaml
           done
 
           for config_dir in infrastructure/overlays/${{ matrix.target_branch }}/configs/*; do
             config_name=$(basename ${config_dir})
             mkdir -p ../tmp/rendered/infrastructure/configs
-            kustomize build ${config_dir} > ../tmp/rendered/infrastructure/configs/${config_name}.yaml || true
+            kustomize build ${config_dir} > ../tmp/rendered/infrastructure/configs/${config_name}.yaml
           done
 
 
