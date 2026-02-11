@@ -37,8 +37,8 @@ spec:
             from: All
 
 
-    #Expose the dashboard on a specific port if needed
-    ports:
-      traefik:
-        expose:
-         default: true
+    # #Expose the dashboard on a specific port if needed
+    # ports:
+    #   traefik:
+    #     expose:
+    #      default: true
