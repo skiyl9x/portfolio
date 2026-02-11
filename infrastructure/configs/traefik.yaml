@@ -35,10 +35,6 @@ spec:
         entryPoints:
         - web
         matchRule: Host(`dashboard.localhost`)
-    ports:
-      traefik:
-        expose:
-          default: true
     providers:
       kubernetesGateway:
         enabled: true
