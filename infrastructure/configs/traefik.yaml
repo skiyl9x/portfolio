@@ -24,11 +24,6 @@ spec:
   storageNamespace: traefik-system
   targetNamespace: traefik-system
   values:
-    gateway:
-      listeners:
-        web:
-          namespacePolicy:
-            from: All
     ingressRoute:
       dashboard:
         enabled: true
