@@ -30,11 +30,11 @@ spec:
     providers:
       kubernetesGateway:
         enabled: true
-    gateway:
-      listeners:
-        web:
-          namespacePolicy:
-            from: All
+#    gateway:
+#      listeners:
+#        web:
+#          namespacePolicy:
+#            from: All
     ports:
       web:
         port: 8000        # Matches --entryPoints.web.address
