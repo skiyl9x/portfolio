@@ -39,8 +39,8 @@ spec:
         format: json
     ports:
       traefik:
-        exposedPort: 8080
-        port: 8080
+        expose:
+          default: true
       web:
         exposedPort: 80
         port: 8000
