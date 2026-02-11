@@ -30,6 +30,13 @@ spec:
         entryPoints:
         - web
         matchRule: Host(`dashboard.localhost`)
+    logs:
+      access:
+        enabled: true
+        fields:
+          headers:
+            defaultMode: keep
+        format: json
     ports:
       traefik:
         exposedPort: 8080
