@@ -23,9 +23,9 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
-        matchRule: Host(`dashboard.localhost`)
-        entryPoints:
-          - web
+    #    matchRule: Host(`dashboard.local`)
+    #    entryPoints:
+    #      - web
     # Enable the modern Gateway API provider
     providers:
       kubernetesGateway:
