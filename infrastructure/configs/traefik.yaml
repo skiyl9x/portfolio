@@ -35,6 +35,16 @@ spec:
         entryPoints:
         - web
         matchRule: Host(`dashboard.localhost`)
+    ports:
+      traefik:
+        exposedPort: 8080
+        port: 8080
+      web:
+        exposedPort: 80
+        port: 8000
+      websecure:
+        exposedPort: 443
+        port: 8443
     providers:
       kubernetesGateway:
         enabled: true
