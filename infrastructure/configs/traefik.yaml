@@ -32,6 +32,9 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
+        entryPoints:
+        - web
+        matchRule: Host(`dashboard.localhost`)
     ports:
       traefik:
         expose:
