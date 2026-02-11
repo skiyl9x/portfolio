@@ -35,7 +35,16 @@ spec:
         web:
           namespacePolicy:
             from: All
-
+    ports:
+      web:
+        port: 8000        # Matches --entryPoints.web.address
+        exposedPort: 80   # What you'll use in your browser (http://<IP>)
+      websecure:
+        port: 8443        # Matches --entryPoints.websecure.address
+        exposedPort: 443  # What you'll use in your browser (https://<IP>)
+      traefik:
+        port: 8080        # Matches --entryPoints.traefik.address
+        exposedPort: 8080 # Usually kept the same for the dashboard
 
     # #Expose the dashboard on a specific port if needed
     # ports:
