@@ -19,18 +19,26 @@ spec:
         name: traefik
         namespace: flux-system
   values:
-    # Enable the modern Gateway API provider
-    providers:
-      kubernetesGateway:
-        enabled: true
-    
     # Optional: Enable the Traefik Dashboard
     ingressRoute:
       dashboard:
         enabled: true
-    
+        matchRule: Host(`dashboard.localhost`)
+        entryPoints:
+          - web
+    # Enable the modern Gateway API provider
+    providers:
+      kubernetesGateway:
+        enabled: true
+    gateway:
+      listeners:
+        web:
+          namespacePolicy:
+            from: All
+
+
     # Expose the dashboard on a specific port if needed
-    ports:
-      traefik:
-        expose:
-          default: true
+    # ports:
+    #   traefik:
+    #     expose:
+    #       default: true
