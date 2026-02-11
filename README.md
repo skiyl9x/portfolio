@@ -26,7 +26,7 @@ Traefik installation
 minikube addons enable metallb
 ```
 
-
+```
 oshyd@1H851821G3:~/MyProjects/portfolio/infrastructure/base/configs/metallb$ minikube ip
 192.168.39.162
 oshyd@1H851821G3:~/MyProjects/portfolio/infrastructure/base/configs/metallb$ minikube addons configure metallb
@@ -35,4 +35,5 @@ oshyd@1H851821G3:~/MyProjects/portfolio/infrastructure/base/configs/metallb$ min
     ▪ Using image quay.io/metallb/speaker:v0.9.6
     ▪ Using image quay.io/metallb/controller:v0.9.6
 ✅  metallb was successfully configured
+```
 
