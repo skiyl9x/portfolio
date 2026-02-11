@@ -46,6 +46,17 @@ spec:
         port: 8080        # Matches --entryPoints.traefik.address
         exposedPort: 8080 # Usually kept the same for the dashboard
 
+# ... your existing config (ports, etc.)
+    logs:
+      access:
+        enabled: true
+        # Optional: customize format (common or json)
+        format: json 
+        # Optional: track specific headers
+        fields:
+          headers:
+            defaultMode: keep
+
     # #Expose the dashboard on a specific port if needed
     # ports:
     #   traefik:
