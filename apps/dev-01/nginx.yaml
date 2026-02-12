@@ -39,6 +39,7 @@ spec:
   - nginx.minikube.cluster
   parentRefs:
   - name: traefik-gateway
+    namespace: traefik-system
   rules:
   - backendRefs:
     - name: nginx
