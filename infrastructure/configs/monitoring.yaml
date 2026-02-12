@@ -16,7 +16,7 @@ spec:
     namespace: traefik-system
   rules:
   - backendRefs:
-    - name: grafana
+    - name: kube-prometheus-stack-grafana
       port: 80
     matches:
     - path:
