@@ -34,3 +34,18 @@ spec:
         name: whoami
         ports:
         - containerPort: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: dev-01
+spec:
+  entryPoints:
+  - web
+  routes:
+  - kind: Rule
+    match: Host(`whoami.localhost`)
+    services:
+    - name: whoami
+      port: 80
