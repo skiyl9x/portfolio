@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`whoami.localhost`)
+    - match: Host(`whoami.minikube.cluster`)
       kind: Rule
       services:
         - name: whoami
