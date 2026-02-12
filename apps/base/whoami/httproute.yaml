@@ -7,7 +7,7 @@ spec:
     - name: traefik-gateway
       namespace: traefik-system
   hostnames:
-    - "whoami-gatewayapi.localhost"
+    - "whoami.minikube.cluster"
   rules:
     - matches:
         - path:
