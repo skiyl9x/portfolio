@@ -45,7 +45,7 @@ spec:
   - web
   routes:
   - kind: Rule
-    match: Host(`whoami.localhost`)
+    match: Host(`whoami.minikube.cluster`)
     services:
     - name: whoami
       port: 80
