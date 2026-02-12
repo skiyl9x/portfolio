@@ -34,7 +34,7 @@ metadata:
   name: whoami
 spec:
   hostnames:
-  - whoami-gatewayapi.localhost
+  - whoami.minikube.cluster
   parentRefs:
   - name: traefik-gateway
     namespace: traefik-system
