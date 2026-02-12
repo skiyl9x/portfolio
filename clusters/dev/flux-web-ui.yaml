@@ -37,3 +37,23 @@ spec:
         installCRDs: false
         web:
           serverOnly: true
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: flux-web
+  namespace: flux-system
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik-system
+  hostnames:
+    - "flux-web.minikube.cluster"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: flux-web
+          port: 8080
