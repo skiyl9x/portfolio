@@ -37,3 +37,7 @@ oshyd@1H851821G3:~/MyProjects/portfolio/infrastructure/base/configs/metallb$ min
 ✅  metallb was successfully configured
 ```
 
+Add next to the /etc/hosts
+```
+192.168.39.180  traefik-dashboard.minikube.cluster whoami.minikube.cluster nginx.minikube.cluster rabbitmq.minikube.cluster flux-web.minikube.cluster grafana.minikube.cluster
+```
