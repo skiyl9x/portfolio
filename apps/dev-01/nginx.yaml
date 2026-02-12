@@ -41,5 +41,5 @@ spec:
   - kind: Rule
     match: Host(`nginx.minikube.cluster`)
     services:
-    - name: whoami
+    - name: nginx
       port: 80
