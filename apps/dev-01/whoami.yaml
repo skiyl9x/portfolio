@@ -37,6 +37,7 @@ spec:
   - whoami-gatewayapi.localhost
   parentRefs:
   - name: traefik-gateway
+    namespace: traefik-system
   rules:
   - backendRefs:
     - name: whoami
