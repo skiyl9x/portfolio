@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring-system # Make sure this namespace exists
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "67.x" # Uses latest v67 branch
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    # Grafana Configuration
+    grafana:
+      enabled: true
+      persistence:
+        enabled: true
+        size: 5Gi
+      adminPassword: "prom-operator" # Change this or use a Secret!
+      
+    # Prometheus Configuration
+    prometheus:
+      prometheusSpec:
+        retention: 10d
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 10Gi
+    
+    # Disable Alertmanager if you don't need emails/slack pings yet
+    alertmanager:
+      enabled: false
