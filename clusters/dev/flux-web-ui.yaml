@@ -56,4 +56,4 @@ spec:
             value: /
       backendRefs:
         - name: flux-web
-          port: 8080
+          port: 9080
