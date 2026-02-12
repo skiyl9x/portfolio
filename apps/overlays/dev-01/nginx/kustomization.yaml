@@ -5,4 +5,3 @@ resources:
 images:
   - name: nginx
     newTag: 1.25.3
-namespace: dev-01
