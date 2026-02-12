@@ -9,5 +9,5 @@ spec:
     - match: Host(`nginx.minikube.cluster`)
       kind: Rule
       services:
-        - name: whoami
+        - name: nginx
           port: 80
