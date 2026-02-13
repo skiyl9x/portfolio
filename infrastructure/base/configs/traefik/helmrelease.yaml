@@ -23,7 +23,7 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
-        matchRule: Host(`traefik-dashboard.minikube.cluster`)
+        matchRule: Host(`traefik-dashboard.${DOMAIN_NAME}`)
         entryPoints:
           - web
     # Enable the modern Gateway API provider

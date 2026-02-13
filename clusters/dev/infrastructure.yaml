@@ -31,3 +31,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: rendered-dev
+  # Global variables for dev cluster
+  postBuild:
+    substitute:
+      DOMAIN_NAME: "dev.mycluster.com"
