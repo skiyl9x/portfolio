@@ -5,7 +5,7 @@ metadata:
   namespace: rabbitmq-system
 spec:
   hostnames:
-  - rabbitmq.${DOMAIN_NAME}
+  - rabbitmq.${cluster_domain}
   parentRefs:
   - name: traefik-gateway
     namespace: traefik-system

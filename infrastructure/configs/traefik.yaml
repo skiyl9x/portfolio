@@ -34,7 +34,7 @@ spec:
         enabled: true
         entryPoints:
         - web
-        matchRule: Host(`traefik-dashboard.${DOMAIN_NAME}`)
+        matchRule: Host(`traefik-dashboard.${cluster_domain}`)
     logs:
       access:
         enabled: true
