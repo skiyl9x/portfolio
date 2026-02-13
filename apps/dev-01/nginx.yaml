@@ -36,7 +36,7 @@ metadata:
   name: nginx
 spec:
   hostnames:
-  - nginx.minikube.cluster
+  - nginx.${apps_domain}
   parentRefs:
   - name: traefik-gateway
     namespace: traefik-system
