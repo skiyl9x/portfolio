@@ -7,7 +7,7 @@ spec:
     - name: traefik-gateway
       namespace: traefik-system
   hostnames:
-    - "nginx.minikube.cluster"
+    - "nginx.${apps_domain}"
   rules:
     - matches:
         - path:

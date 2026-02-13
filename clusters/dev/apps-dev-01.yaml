@@ -16,4 +16,9 @@ spec:
     kind: GitRepository
     name: rendered-dev
   targetNamespace: dev-01
+  # Global variables for dev cluster
+  postBuild:
+    substitute:
+      apps_env: "dev-01"
+      apps_domain: "dev-01.mycluster.com"
 
