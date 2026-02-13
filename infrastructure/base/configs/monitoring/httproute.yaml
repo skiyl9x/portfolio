@@ -8,7 +8,7 @@ spec:
     - name: traefik-gateway
       namespace: traefik-system
   hostnames:
-    - "grafana.${DOMAIN_NAME}"
+    - "grafana.${cluster_domain}"
   rules:
     - matches:
         - path:

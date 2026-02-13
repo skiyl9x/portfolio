@@ -34,4 +34,5 @@ spec:
   # Global variables for dev cluster
   postBuild:
     substitute:
-      DOMAIN_NAME: "dev.mycluster.com"
+      cluster_env: "dev"
+      cluster_domain: "dev.mycluster.com"

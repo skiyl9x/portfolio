@@ -8,7 +8,7 @@ spec:
     - name: traefik-gateway
       namespace: traefik-system
   hostnames:
-    - "rabbitmq.${DOMAIN_NAME}"
+    - "rabbitmq.${cluster_domain}"
   rules:
     - matches:
         - path:
