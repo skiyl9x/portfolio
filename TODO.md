@@ -7,7 +7,7 @@
 - [x] Install RabbitMQ Cluster Operator and add RabbitMQ Cluster
 - [x] Implement fist Helm Chart for Web Application
 - [ ] Create Helm Repository (OCI), upload Helm Templates and use them
-- [ ] Install two service and connect them
+- [ ] Install two services and connect them
 - [ ] Add automatic certificate generation with Traefik for applications
 - [ ] Try Service Mesh, connect services to each other
 - [ ] Change FluxCD architecture, use OCI artifacts instead of code in GitHub branches to deploy
