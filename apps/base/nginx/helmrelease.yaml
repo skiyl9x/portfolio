@@ -16,6 +16,7 @@ spec:
     appsDomain: ${apps_domain}
     env:
       SERVICE_LOG_LEVEL: info
+      AMQP_HOST: "rabbitmq.rabbitmq-system.svc"
     gateway:
       name: traefik-gateway
       namespace: traefik-system

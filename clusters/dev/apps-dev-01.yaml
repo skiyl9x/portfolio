@@ -22,4 +22,3 @@ spec:
     substitute:
       apps_env: "dev-01"
       apps_domain: "dev-01.mycluster.com"
-
