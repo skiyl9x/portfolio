@@ -24,4 +24,4 @@ spec:
       repository: nginx
       tag: "1.22"
     nameOverride: nginx
-    replicaCount: 5
+    replicaCount: 4
