@@ -1,0 +1,11 @@
+# values-patch.yaml
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nginx
+spec:
+  values:
+    replicaCount: 5
+    image:
+      tag: "1.22"
+

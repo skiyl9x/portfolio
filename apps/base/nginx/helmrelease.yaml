@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nginx
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: ./charts/web-app
+      sourceRef:
+        kind: GitRepository
+        name: skiyl9x-helm-charts
+        namespace: flux-system
+  values:
+    appsDomain: ${apps_domain}
+    env:
+      SERVICE_LOG_LEVEL: debug
+    gateway:
+      name: traefik-gateway
+      namespace: traefik-system
+    image:
+      repository: nginx
+      tag: "1.21"
+    nameOverride: nginx
+    replicaCount: 3
+
