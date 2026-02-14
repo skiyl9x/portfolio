@@ -48,7 +48,7 @@ spec:
     - name: traefik-gateway
       namespace: traefik-system
   hostnames:
-    - "flux-web.dev.minikube.cluster"
+    - "flux-web.dev.mycluster.com"
   rules:
     - matches:
         - path:
