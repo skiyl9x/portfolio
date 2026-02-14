@@ -7,9 +7,10 @@ spec:
   interval: 1m
   chart:
     spec:
-      chart: ./charts/web-app
+      chart: web-app
+      version: 0.1.0
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: skiyl9x-helm-charts
         namespace: flux-system
   values:
