@@ -6,7 +6,7 @@
 - [x] Upgrade FluxCD to use Flux Operator
 - [x] Install RabbitMQ Cluster Operator and add RabbitMQ Cluster
 - [x] Implement fist Helm Chart for Web Application
-- [ ] Create Helm Repository (OCI), upload Helm Templates and use them
+- [x] Create Helm Repository (OCI), upload Helm Templates and use them
 - [ ] Install two services and connect them
 - [ ] Add automatic certificate generation with Traefik for applications
 - [ ] Try Service Mesh, connect services to each other
