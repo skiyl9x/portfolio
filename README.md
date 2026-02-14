@@ -41,3 +41,10 @@ Add next to the /etc/hosts
 ```
 192.168.39.180  traefik-dashboard.minikube.cluster whoami.minikube.cluster nginx.minikube.cluster rabbitmq.minikube.cluster flux-web.minikube.cluster grafana.minikube.cluster
 ```
+
+
+Create secret
+
+```
+kubectl create secret docker-registry github-oci-auth --namespace=flux-system --docker-server=ghcr.io --docker-username=skiyl9x --docker-password=<github-token>
+```

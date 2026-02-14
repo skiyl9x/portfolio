@@ -43,4 +43,6 @@ metadata:
 spec:
   interval: 1m
   type: oci
-  url: oci://ghcr.io/skiyl9x/charts
+  url: oci://ghcr.io/skiyl9x/helm-charts
+  secretRef:
+    name: github-oci-auth
