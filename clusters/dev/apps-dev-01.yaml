@@ -21,4 +21,4 @@ spec:
   postBuild:
     substitute:
       apps_env: "dev-01"
-      apps_domain: "dev-01.mycluster.com"
+      apps_domain: "dev-01.mycluster-2.com"
