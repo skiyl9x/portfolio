@@ -39,7 +39,7 @@ oshyd@1H851821G3:~/MyProjects/portfolio/infrastructure/base/configs/metallb$ min
 
 Add next to the /etc/hosts
 ```
-192.168.39.180  traefik-dashboard.minikube.cluster whoami.minikube.cluster nginx.minikube.cluster rabbitmq.minikube.cluster flux-web.minikube.cluster grafana.minikube.cluster
+192.168.39.180  traefik-dashboard.dev.mycluster.com whoami.dev-01.mycluster.com nginx.dev-01.mycluster.com rabbitmq.dev.mycluster.com flux-web.dev.mycluster.com grafana.dev.mycluster.com
 ```
 
 
