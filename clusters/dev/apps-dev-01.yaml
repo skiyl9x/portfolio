@@ -15,7 +15,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: rendered-dev
-  targetNamespace: dev-01
+  targetNamespace: apps-dev-01
   # Global variables for dev cluster
   postBuild:
     substitute:
