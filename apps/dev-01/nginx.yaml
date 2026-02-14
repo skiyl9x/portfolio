@@ -14,6 +14,7 @@ spec:
   values:
     appsDomain: ${apps_domain}
     env:
+      AMQP_HOST: rabbitmq.rabbitmq-system.svc
       SERVICE_LOG_LEVEL: debug
     gateway:
       name: traefik-gateway
