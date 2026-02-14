@@ -8,5 +8,5 @@ spec:
       SERVICE_LOG_LEVEL: debug
     image:
       tag: "1.22"
-    replicaCount: 5
+    replicaCount: 4
 
