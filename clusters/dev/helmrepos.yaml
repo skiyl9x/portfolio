@@ -42,4 +42,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  url: oci://ghcr.io/helm-charts
+  url: oci://ghcr.io/skiyl9x/charts
