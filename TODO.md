@@ -11,3 +11,8 @@
 - [ ] Add automatic certificate generation with Traefik for applications
 - [ ] Try Service Mesh, connect services to each other
 - [ ] Change FluxCD architecture, use OCI artifacts instead of code in GitHub branches to deploy
+- [ ] Go through all your current deployments (RabbitMQ, Prometheus, etc.) and explicitly set resources.requests and resources.limits. Try to "OOMKill" (Out of Memory Kill) a pod by setting a limit too low to see how Kubernetes reacts.
+- [ ] Implement Pod Anti-Affinity
+      If you have more than one node, configure your web app deployment so that two replicas never run on the same physical node.
+- [ ] Implement limitation of resources for namespaces
+- [ ] Add OpenTelemetry collector to collect the logs and push to Loki
