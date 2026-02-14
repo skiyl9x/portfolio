@@ -30,4 +30,18 @@ spec:
   url: https://github.com/skiyl9x/portfolio.git
   ref:
     branch: prod      # <- stage branch з rendered manifests
+---
+# TODO
+# Create Helm Charts repository (OCI)
+# And use HelmRepository instead of GitRepository
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: skiyl9x-helm-charts
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/skiyl9x/helm-charts
+  ref:
+    branch: main
 
