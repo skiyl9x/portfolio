@@ -11,5 +11,5 @@ spec:
     env:
       SERVICE_LOG_LEVEL: debug
     image:
-      tag: "1.23"
+      tag: "1.22"
     replicaCount: 4
