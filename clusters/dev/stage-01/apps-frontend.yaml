@@ -14,7 +14,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: rendered-dev
+    name: rendered-stage
   targetNamespace: apps-frontend-stage-01
   postBuild:
     substituteFrom:
