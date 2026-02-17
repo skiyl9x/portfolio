@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nginx
+spec:
+  chart:
+    spec:
+      chart: web-app
+      version: 0.1.6
+  values:
+    env:
+      SERVICE_LOG_LEVEL: debug
+    image:
+      tag: "1.22"
+    replicaCount: 4
