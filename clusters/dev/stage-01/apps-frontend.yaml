@@ -16,8 +16,7 @@ spec:
     kind: GitRepository
     name: rendered-dev
   targetNamespace: apps-frontend-stage-01
-  # Global variables for dev cluster
   postBuild:
-    substitute:
-      apps_env: "stage-01"
-      apps_domain: "stage-01.mycluster.com"
+    substituteFrom:
+      - kind: ConfigMap
+        name: shared-vars-stage-01
