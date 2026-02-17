@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: shared-vars-dev-01
+  name: shared-vars-stage-01
   namespace: flux-system
 data:
-  apps_env: "dev-01"
-  apps_domain: "dev-01.mycluster.com"
+  apps_env: "stage-01"
+  apps_domain: "stage-01.mycluster.com"
