@@ -7,7 +7,7 @@ spec:
   chart:
     spec:
       chart: web-app
-      version: 0.1.7
+      version: 0.1.6
       sourceRef:
         kind: HelmRepository
         name: skiyl9x-helm-charts
