@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: api-service
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: api-service
+      version: 0.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: skiyl9x-helm-charts
+        namespace: flux-system
+  values:
+    appsDomain: ${apps_domain}
+    gateway:
+      name: traefik-gateway
+      namespace: traefik-system
+    image:
+      repository: ghcr.io/skiyl9x/backend-api-service
+      tag: "main-64d0894"
+    nameOverride: api-service
+    replicaCount: 3
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+    route:
+      path: /api/
