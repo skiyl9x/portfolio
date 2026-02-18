@@ -93,7 +93,7 @@ spec:
         kind: HelmRepository
         name: skiyl9x-helm-charts
         namespace: flux-system
-      version: 0.1.7
+      version: 0.1.8
   interval: 1m
   values:
     appsDomain: ${apps_domain}
