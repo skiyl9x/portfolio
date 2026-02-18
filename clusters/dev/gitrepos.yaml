@@ -7,7 +7,7 @@ spec:
   interval: 1m
   url: https://github.com/skiyl9x/portfolio.git
   ref:
-    branch: dev      # <- dev branch з rendered manifests
+    branch: dev
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
@@ -18,7 +18,7 @@ spec:
   interval: 1m
   url: https://github.com/skiyl9x/portfolio.git
   ref:
-    branch: stage      # <- stage branch з rendered manifests
+    branch: stage
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
@@ -29,5 +29,4 @@ spec:
   interval: 1m
   url: https://github.com/skiyl9x/portfolio.git
   ref:
-    branch: prod      # <- stage branch з rendered manifests
-
+    branch: prod
