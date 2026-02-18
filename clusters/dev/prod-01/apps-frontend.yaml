@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps-frontend-prod-01
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-frontend-prod-01
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: ./apps/prod-01/frontend/
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rendered-stage
+  targetNamespace: apps-frontend-prod-01
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: shared-vars-prod-01
