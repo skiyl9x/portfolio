@@ -4,4 +4,6 @@ metadata:
   name: api-service
 spec:
   values:
+    image:
+      tag: "main-92c585e"
     replicaCount: 4
