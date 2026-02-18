@@ -1,3 +1,4 @@
 resources:
   - nginx/
   - whoami/
+  - web-page/
