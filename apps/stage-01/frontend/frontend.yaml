@@ -16,12 +16,12 @@ spec:
     appsDomain: ${apps_domain}
     env:
       AMQP_HOST: rabbitmq.rabbitmq-system.svc
-      SERVICE_LOG_LEVEL: debug
+      SERVICE_LOG_LEVEL: info
     gateway:
       name: traefik-gateway
       namespace: traefik-system
     image:
       repository: nginx
-      tag: "1.22"
+      tag: "1.21"
     nameOverride: nginx
-    replicaCount: 4
+    replicaCount: 5
