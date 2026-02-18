@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps-backend-stage-01
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: apps-backend-stage-01
+  namespace: apps-backend-stage-01
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 200m
+      memory: 256Mi
+    type: Container
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-backend-stage-01
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: ./apps/stage-01/backend/
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rendered-stage
+  targetNamespace: apps-backend-stage-01
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: shared-vars-stage-01
