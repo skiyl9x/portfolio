@@ -1,7 +1,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
- name: backend-api-service-automation-dev-01
+ name: image-update-automation
  namespace: flux-system
 spec:
  interval: 5m
