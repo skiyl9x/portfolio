@@ -6,6 +6,8 @@ metadata:
 spec:
  image: ghcr.io/skiyl9x/api-service
  interval: 5m
+ secretRef:
+    name: github-oci-auth
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
