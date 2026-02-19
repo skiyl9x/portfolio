@@ -21,7 +21,7 @@ minikube addons enable storage-provisioner-rancher
 
 
 
-Traefik installation
+Enable LoadBalancer
 ```
 minikube addons enable metallb
 ```
