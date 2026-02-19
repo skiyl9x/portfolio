@@ -1,0 +1,23 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: backend-api-service-repo-dev-01
+  namespace: flux-system
+spec:
+  image: ghcr.io/skiyl9x/api-service
+  interval: 5m
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: backend-api-service-policy-dev-01
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: backend-api-service-repo-dev-01
+  filterTags:
+    # Matches: main-20260219-231557-7d2a8b4
+    pattern: '^main-[0-9]{8}-[0-9]{6}-[a-fA-F0-9]+$'
+  policy:
+    alphabetical:
+      order: asc
