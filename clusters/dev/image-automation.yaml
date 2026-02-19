@@ -1,25 +1,25 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImageUpdateAutomation
-metadata:
-  name: backend-api-service-automation-dev-01
-  namespace: flux-system
-spec:
-  interval: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system # The name of your existing GitRepository source
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxcdbot@users.noreply.github.com
-        name: fluxcdbot
-      messageTemplate: 'chore(cd): update image to {{range .Updated.Images}}{{println .}}{{end}}'
-    push:
-      branch: main
-  update:
-    path: ./apps/ # Path in Git where your YAMLs are
-    strategy: Setters
+#apiVersion: image.toolkit.fluxcd.io/v1beta1
+#kind: ImageUpdateAutomation
+#metadata:
+#  name: backend-api-service-automation-dev-01
+#  namespace: flux-system
+#spec:
+#  interval: 5m
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system # The name of your existing GitRepository source
+#  git:
+#    checkout:
+#      ref:
+#        branch: main
+#    commit:
+#      author:
+#        email: fluxcdbot@users.noreply.github.com
+#        name: fluxcdbot
+#      messageTemplate: 'chore(cd): update image to {{range .Updated.Images}}{{println .}}{{end}}'
+#    push:
+#      branch: main
+#  update:
+#    path: ./apps/ # Path in Git where your YAMLs are
+#    strategy: Setters
 
