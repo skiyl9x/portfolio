@@ -4,7 +4,7 @@ metadata:
  name: backend-api-service-repo-dev-01
  namespace: flux-system
 spec:
- image: ghcr.io/skiyl9x/api-service
+ image: ghcr.io/skiyl9x/backend-api-service
  interval: 5m
  secretRef:
     name: github-oci-auth
