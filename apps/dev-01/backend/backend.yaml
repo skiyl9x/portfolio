@@ -19,7 +19,7 @@ spec:
       namespace: traefik-system
     image:
       repository: ghcr.io/skiyl9x/backend-api-service
-      tag: ghcr.io/skiyl9x/backend-api-service:main-20260219-212441-33d187c
+      tag: main-20260219-212441-33d187c
     nameOverride: api-service
     replicaCount: 4
     resources:
