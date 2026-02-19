@@ -21,7 +21,7 @@ minikube addons enable storage-provisioner-rancher
 
 
 
-Enable metallb(LoadBalancer) for minikube
+Enable LoadBalancer(metallb) for minikube
 ```
 minikube addons enable metallb
 ```
