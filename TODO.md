@@ -7,7 +7,7 @@
 - [x] Install RabbitMQ Cluster Operator and add RabbitMQ Cluster
 - [x] Implement fist Helm Chart for Web Application
 - [x] Create Helm Repository (OCI), upload Helm Templates and use them
-- [ ] Install two services and connect them
+- [x] Install two services and connect them
 - [ ] Add automatic certificate generation with Traefik for applications
 - [ ] Try Service Mesh, connect services to each other
 - [ ] Change FluxCD architecture, use OCI artifacts instead of code in GitHub branches to deploy
@@ -16,3 +16,4 @@
       If you have more than one node, configure your web app deployment so that two replicas never run on the same physical node.
 - [ ] Implement limitation of resources for namespaces
 - [ ] Add OpenTelemetry collector to collect the logs and push to Loki
+- [ ] Create matrix job for frontend and backend and dynamic image name from docker-bake.hcl
