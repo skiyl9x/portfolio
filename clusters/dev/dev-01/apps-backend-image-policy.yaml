@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
  name: backend-api-service-repo-dev-01
@@ -7,7 +7,7 @@ spec:
  image: ghcr.io/skiyl9x/api-service
  interval: 5m
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
  name: backend-api-service-policy-dev-01
