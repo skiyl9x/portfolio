@@ -8,6 +8,7 @@
 - [x] Implement fist Helm Chart for Web Application
 - [x] Create Helm Repository (OCI), upload Helm Templates and use them
 - [x] Install two services and connect them
+- [x] Add image tag automation for dev-01 env
 - [ ] Add automatic certificate generation with Traefik for applications
 - [ ] Try Service Mesh, connect services to each other
 - [ ] Change FluxCD architecture, use OCI artifacts instead of code in GitHub branches to deploy
